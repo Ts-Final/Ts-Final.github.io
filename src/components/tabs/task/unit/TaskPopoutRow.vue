@@ -18,8 +18,8 @@
 </template>
 
 <script lang="ts">
-import SeparateLine from "../../small/separateLine.vue"
-import {TaskClass} from "../../../core/task/class.ts";
+import SeparateLine from "../../../small/separateLine.vue"
+import {TaskClass} from "../../../../core/task/class.ts";
 
 export default {
   name: 'TaskPopoutRow',
@@ -41,6 +41,7 @@ export default {
   transform: translate(-50%, 0);
   z-index: 10;
   transition: all 0.3s linear;
+  background-image: var(--bgi);
 }
 
 .res-line-top:hover .task-res-top {

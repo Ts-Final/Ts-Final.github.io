@@ -64,6 +64,7 @@ export class TaskClass {
 
   changeActivate() {
     this.activated = !this.activated
+    console.log("changed",this.title)
   }
 
   constructor(id: number,

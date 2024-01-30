@@ -1,15 +1,18 @@
 <script setup lang="ts">
 
 import ResourceGeneralTop from "./general/ResourceGeneralTop.vue";
-import {player} from "../../core/player.ts";
 </script>
 
 <template>
-  <div v-if="player.display.resource" class="ui-top">
-    <ResourceGeneralTop v-if="player.display.column==1"/>
+  <div class="res-wrapper">
+    <ResourceGeneralTop/>
   </div>
 </template>
 
 <style scoped>
-
+.res-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="first-row">
     <span class="task-name">{{ task.title }}</span>
-    <button type="button" @click="task.changeActivate" class="btn"
+    <button type="button" @click="task.changeActivate()" class="btn"
             :class="{'btn-ON':task.activated, 'btn-OFF':!task.activated}">
       <span v-if="task.activated">ON</span>
       <span v-else>OFF</span>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import {TaskClass} from "../../../core/task/class.ts";
+import {TaskClass} from "../../../../core/task/class.ts";
 
 export default {
   name: 'TaskDisplayRow',

@@ -6,7 +6,6 @@
 }
 
 .ui-top {
-  width: 100%;
   height: 100%;
   margin: 0;
   padding: 2px;
@@ -30,4 +29,10 @@
   --z-topbar: 10;
   --z-popout: 20;
   --bgi:linear-gradient(60deg, #0d1418 0%, #11161b 100%);
+  --border: #7cdcf4
 }
+
+.circle {
+  border-radius: 50%;
+}
+

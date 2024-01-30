@@ -27,7 +27,7 @@ import TaskPopoutRow from "./TaskPopoutRow.vue";
 
 <script lang="ts">
 
-import {TaskClass} from "../../../core/task/class.ts";
+import {TaskClass} from "../../../../core/task/class.ts";
 
 export default {
   name: "TaskUnit",

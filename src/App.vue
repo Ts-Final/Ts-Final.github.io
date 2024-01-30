@@ -1,15 +1,15 @@
 <script setup lang="ts">
 
 import "./base.css"
-import ResourceTop from "./components/res/ResourceTop.vue";
-import TaskTop from "./components/task/TaskTop.vue";
-import TopBarTop from "./components/topbar/TopBarTop.vue";
+import LeftBar from "./components/LeftBar.vue";
+import RightTab from "./components/tabs/RightTab.vue";
 </script>
 
-<template class="full">
-  <TopBarTop/>
-  <ResourceTop />
-  <TaskTop/>
+<template>
+  <div class="full app-wrapper">
+    <LeftBar class="blue-border" style="border-right: none"/>
+    <RightTab class="blue-border" style="display: inline-block"/>
+  </div>
 </template>
 
 <style>
@@ -18,4 +18,13 @@ body,#app, :root {
   width: 100%;
   height: 100%;
 }
+.app-wrapper{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  flex-wrap: nowrap;
+}
+
 </style>

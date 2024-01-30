@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {normalTasks} from "../../core/task/Tasks.ts";
+import {normalTasks} from "../../../core/task/Tasks.ts";
 import TaskUnit from "./unit/TaskUnit.vue";
 </script>
 

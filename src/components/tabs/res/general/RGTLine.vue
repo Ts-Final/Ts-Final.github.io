@@ -11,7 +11,7 @@
 
 
 <script lang="ts">
-import {ResourceClass} from "../../../core/resource/Resource.ts";
+import {ResourceClass} from "../../../../core/resource/Resource.ts";
 
 export default {
   name:"RGTLine",

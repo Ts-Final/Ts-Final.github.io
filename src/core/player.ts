@@ -26,7 +26,6 @@ export function update() {
   for (const resKey in _player.resource) {
     _player.resource[resKey].update()
   }
-  console.log("update")
 }
 
 setInterval(update, 1000)

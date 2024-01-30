@@ -16,5 +16,7 @@ export class ResourceChangeData {
   allChange :number = 0
   calcAllChange() {
     this.allChange = this.task + this.research
+    this.task = 0
+    this.research = 0
   }
 }

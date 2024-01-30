@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import RGTLine from "./RGTLine.vue";
-import {player} from "../../../core/player.ts";
+import {player} from "../../../../core/player.ts";
 </script>
 
 <template>
@@ -26,17 +26,15 @@ import {player} from "../../../core/player.ts";
   position: relative;
   flex-direction: column;
   width: 75%;
-  align-self: center;
   margin: auto;
+  color: #7cdcf4;
+  top:-15%;
 }
 .RGT-line {
   display: inline-grid;
   grid-template-columns: repeat(5,1fr);
   grid-auto-flow: row;
   text-align: center;
-}
-.RGT-line > p {
-  display: inline-block;
 }
 
 </style>
