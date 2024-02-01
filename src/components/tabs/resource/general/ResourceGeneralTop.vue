@@ -7,11 +7,11 @@ import {player} from "../../../../core/player.ts";
 <template>
   <div class="RGT border-list">
     <div class="RGT-line blue-border">
-      <p>Resource</p>
-      <p>Amount</p>
-      <p>Maximum</p>
-      <p>Produce/s</p>
-      <p>Consume/s</p>
+      <p>资源类型</p>
+      <p>当前数量</p>
+      <p>最大</p>
+      <p>生产/s</p>
+      <p>消耗/s</p>
     </div>
   <RGTLine class="RGT-line blue-border no-top-border"
            v-for="resource in player.resource" :res="resource"

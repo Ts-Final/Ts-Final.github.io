@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {energyTasks} from "../../../core/task/Tasks.ts";
-import TaskUnit from "./unit/TaskUnit.vue";
+import TaskUnit from "./TaskUnit.vue";
 </script>
 
 <template>

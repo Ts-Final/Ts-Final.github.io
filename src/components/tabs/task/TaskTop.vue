@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TaskUnit from "./unit/TaskUnit.vue";
+import TaskUnit from "./TaskUnit.vue";
 import {player} from "../../../core/player.ts";
 
 </script>

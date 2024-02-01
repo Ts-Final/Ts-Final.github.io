@@ -1,13 +1,13 @@
 import {Resource} from "./resource/Resource.ts";
 import {Tasks} from "./task/Tasks.ts";
-import {Ref, ref} from "vue";
 import {Display} from "./display.ts";
+import {Research} from "./research/Research.ts";
 
-export const _player = {
+export const player = {
   display:Display,
   resource:Resource,
   tasks: Tasks,
-
+  research: Research,
 }
 
 declare global {
@@ -16,15 +16,19 @@ declare global {
   }
 }
 
-export const player: Ref<typeof _player>= ref(_player)
-window["player"] = player.value
+window["player"] = player
 
 export function update() {
-  for (const taskKey in _player.tasks) {
-    _player.tasks[taskKey].update()
+  for (const taskKey in player.tasks) {
+    player.tasks[taskKey].update()
   }
-  for (const resKey in _player.resource) {
-    _player.resource[resKey].update()
+  for (const rchKey in player.research) {
+    player.research[rchKey].update()
+  }
+
+  // Last
+  for (const resKey in player.resource) {
+    player.resource[resKey].update()
   }
 }
 

@@ -11,7 +11,3 @@ export function ArrayFind<T>(array:T[],f:(arg:T)=>boolean ) {
   }
   throw new ValueNotFoundError("Didn't find the value satisfies the condition in array", array)
 }
-
-export function ArrayAll(array:boolean[]){
-  return !(false in array)
-}
