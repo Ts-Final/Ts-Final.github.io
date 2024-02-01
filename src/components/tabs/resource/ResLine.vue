@@ -16,6 +16,7 @@
   grid-template-columns: 50% 40%;
   text-align: center;
   color: #b8dcee;
+  height: 1.5rem;
 }
 .pro {
   background-image: linear-gradient(to right, #3fe13f88 0%, #00000000 90%);

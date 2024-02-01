@@ -1,15 +1,19 @@
-import {player} from "./player.ts";
+import {ref} from "vue";
 
 export const Display = {
   key:"resource",
 
-  resource:true,
-  task:false,
+  resource:ref(true),
+  task:ref(false),
+  research:ref(false),
+  researchInf: ref(false)
 }
 
 export function changeDisplay(key:keyof typeof Display):void {
-  player.value.display.resource = key == "resource"
-  player.value.display.task = key == "task"
+  Display.resource.value = key == "resource"
+  Display.task.value = key == "task"
+  Display.research.value = key == 'research'
+  Display.researchInf.value = key == 'researchInf'
 
-  player.value.display.key = key
+  Display.key = key
 }

@@ -16,7 +16,7 @@ export const Tasks: {[x:number]:TaskClass} = {
     "但是事实上这个绳结看起来并不是很稳固的样子",
     [["air",10]],
     [["energy", 1]],
-    ()=> Resource.energy.amount >= 10)
+    ()=> Resource.energy.amount.value >= 10)
 }
 
 /**

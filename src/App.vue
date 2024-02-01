@@ -8,12 +8,12 @@ import RightTab from "./components/tabs/RightTab.vue";
 <template>
   <div class="full app-wrapper">
     <LeftBar class="blue-border" style="border-right: none"/>
-    <RightTab class="blue-border" style="display: inline-block"/>
+    <RightTab class="blue-border" style=""/>
   </div>
 </template>
 
 <style>
-body,#app, :root {
+body,:root {
   background-image:linear-gradient(60deg, #0d1418 0%, #11161b 100%);
   width: 100%;
   height: 100%;
