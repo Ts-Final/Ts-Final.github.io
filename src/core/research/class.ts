@@ -88,4 +88,23 @@ export class ResearchInfClass extends ResearchClass {
     super(id, name, des, itl, cost, affect, time, unlock,);
     this.timePow = timePow
   }
+  update() {
+    if (!this.unlocked.value) {
+      this.unlocked.value = this.unlock()
+      return
+    }
+    if (!this.activated.value) {
+      return
+    }
+    console.log(this)
+    if (!this.canCost()) {
+      return
+    }
+    this.doCost()
+    this.started.value += 1
+    if (this.started.value >= this.time) {
+      this.level.value += 1
+      this.time *= this.timePow
+    }
+  }
 }

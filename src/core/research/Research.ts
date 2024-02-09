@@ -1,4 +1,4 @@
-import {ResearchClass} from "./class.ts";
+import {ResearchClass, ResearchInfClass} from "./class.ts";
 
 export const Research:{[x:number]:ResearchClass} = {
   1: new ResearchClass(1,
@@ -9,4 +9,8 @@ export const Research:{[x:number]:ResearchClass} = {
     [['energy', 'pro', 0.05]],
     10,
     ()=> true,)
+}
+
+export const ResearchInf: {[x:number]: ResearchInfClass} = {
+
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{res?.name}}</p>
+    <p>{{res?.displayName}}</p>
     <p>{{res?.amount}}</p>
     <p>{{res?.maximum}}</p>
     <p>{{res?.produceChange?.allChange}}</p>

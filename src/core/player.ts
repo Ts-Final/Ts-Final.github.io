@@ -2,12 +2,15 @@ import {Resource} from "./resource/Resource.ts";
 import {Tasks} from "./task/Tasks.ts";
 import {Display} from "./display.ts";
 import {Research} from "./research/Research.ts";
+import {Story, storyCalc} from "./story/Story.ts";
 
 export const player = {
   display:Display,
   resource:Resource,
   tasks: Tasks,
   research: Research,
+  story: Story,
+  storyCalc: storyCalc
 }
 
 declare global {

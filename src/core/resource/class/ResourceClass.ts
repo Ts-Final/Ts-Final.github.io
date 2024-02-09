@@ -1,6 +1,8 @@
 import {ResourceChangeTypes} from "../enums.ts";
 import {Ref, ref} from "vue";
 import {ResourceAffect} from "./ResourceAffect.ts";
+import {ResourceTypes} from "./types.ts";
+
 
 /**
  * Resource消耗类型的记录
@@ -19,8 +21,9 @@ export class ResourceChangeData {
 }
 
 export class ResourceClass {
-  name: string
-  amount: Ref<number> = ref(0)
+  name: ResourceTypes
+  displayName: string
+  amount: Ref<number> = ref(1000)
   maximum: Ref<number> = ref(0)
 
   calcMaximum(): number {
@@ -66,8 +69,9 @@ export class ResourceClass {
     this.consumeChange.calcAllChange()
   }
 
-  constructor(name: string) {
+  constructor(name: ResourceTypes, dName: string) {
     this.name = name
+    this.displayName = dName
 
   }
 

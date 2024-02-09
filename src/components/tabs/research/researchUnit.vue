@@ -15,7 +15,7 @@ import ResourceChange from "../resource/ResourceChange.vue";
       </div>
       <div class="second-row">
         <div class="progress-wrapper">
-          <div class="progress" :style="{width: (research.started.value/research.time)}"/>
+          <div class="progress" :style="{width: (research.started.value*100/research.time)+'%'}"/>
         </div>
       </div>
       <div class="third-row">
@@ -76,6 +76,7 @@ import ResourceChange from "../resource/ResourceChange.vue";
 .progress {
   height: 100%;
   background: #7cdcf4;
+  transition: all 1s linear;
 }
 .popout {
   flex-direction: column;
