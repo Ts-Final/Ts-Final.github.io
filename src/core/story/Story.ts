@@ -1,5 +1,5 @@
-import {StoryClass as story} from "./class.ts";
-import {StoryContent} from "./storyContents.ts";
+
+/*
 const T = () => true
 
 export const Story: {[x:number]: story} = {
@@ -24,3 +24,4 @@ export function storyCalc() {
   }
   return i
 }
+*/

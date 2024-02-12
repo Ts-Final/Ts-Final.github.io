@@ -14,8 +14,7 @@ import {player} from "../../../../core/player.ts";
       <p>消耗/s</p>
     </div>
   <RGTLine class="RGT-line blue-border no-top-border"
-           v-for="resource in player.resource" :res="resource"
-           :key="resource.name"/>
+           v-for="res in Object.keys(player.resource)" :ResKey="res" :key="res"/>
   </div>
 
 </template>

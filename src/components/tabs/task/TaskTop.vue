@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import TaskUnit from "./TaskUnit.vue";
-import {player} from "../../../core/player.ts";
+import {GameDataBase} from "../../../core/GameDataBase";
 
 </script>
 
 <template>
   <div class="task-wrapper">
-    <TaskUnit :task="task" v-for="task in player.tasks"/>
+    <TaskUnit :task="task" v-for="task in GameDataBase.Tasks" :key="task.id"/>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ import {player} from "../../../core/player.ts";
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 </style>

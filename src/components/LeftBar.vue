@@ -1,50 +1,40 @@
 <script setup lang="ts">
+import {computed} from "vue"
+import {changeDisplay, displayRef} from "../core/display.ts";
 
-import {player} from "../core/player.ts";
-import {changeDisplay} from "../core/display.ts";
-import {computed} from "vue";
+const storyShown = computed(() =>
+    displayRef.storyExtra.value||displayRef.storyMain.value||displayRef.storySide.value)
+const researchShown = computed(() => displayRef.research.value||displayRef.researchInf.value)
 
-const researchShown = computed(() => {
-  return player.display.research.value || player.display.researchInf.value
-})
-const storyShown = computed(() => {
-  return player.display.storyMain.value || player.display.storyExtra.value || player.display.storySide.value
-})
 </script>
 
 <template>
   <div class="lb-ul-1">
-    <div class="lb-li-1" :class="{chosen:player.display.resource.value}">
+    <div class="lb-li-1" :class="{chosen:displayRef.resource.value}">
       <div class="lb-name" @click="changeDisplay('resource')">资源</div>
     </div>
-    <div class="lb-li-1" :class="{chosen:player.display.task.value}">
+    <div class="lb-li-1" :class="{chosen:displayRef.task.value}">
       <div class="lb-name" @click="changeDisplay('task')">生产</div>
     </div>
     <div class="lb-li-1" :class="{chosen:researchShown}">
-      <div class="lb-name">研究</div>
-      <div class="lb-ul-2">
-        <div class="lb-li-2 lb-name" @click="changeDisplay('research')"
-             :class="{chosen:player.display.research.value}">一次性
-        </div>
-        <div class="lb-li-2 lb-name" @click="changeDisplay('researchInf')"
-             :class="{chosen:player.display.researchInf.value}">infinity
-        </div>
-
-      </div>
+      <div class="lb-name" @click="changeDisplay('research')">研究</div>
     </div>
     <div class="lb-li-1" :class="{chosen:storyShown}" v-if="false">
       <div class="lb-name">故事</div>
       <div class="lb-ul-2">
         <div class="lb-li-2 lb-name" @click="changeDisplay('storyMain')"
-             :class="{chosen:player.display.storyMain.value}">主线
+             :class="{chosen:displayRef.storyMain.value}">主线
         </div>
         <div class="lb-li-2 lb-name" @click="changeDisplay('storySide')"
-             :class="{chosen:player.display.storySide.value}">支线
+             :class="{chosen:displayRef.storySide.value}">支线
         </div>
         <div class="lb-li-2 lb-name" @click="changeDisplay('storyExtra')"
-             :class="{chosen:player.display.storyExtra.value}">额外
+             :class="{chosen:displayRef.storyExtra.value}">额外
         </div>
       </div>
+    </div>
+    <div class="lb-li-2" :class="{chosen:displayRef.h2p.value}" style="border-color: #c35ee7">
+      <div class="lb-name" @click="changeDisplay('h2p')">指引</div>
     </div>
   </div>
 

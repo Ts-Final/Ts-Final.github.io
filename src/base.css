@@ -30,9 +30,26 @@
   --z-popout: 20;
   --bgi:linear-gradient(60deg, #0d1418 0%, #11161b 100%);
   --border: #7cdcf4;
+
 }
 
 .circle {
   border-radius: 50%;
 }
 
+.rainbow-text {
+  background-image: linear-gradient(to right, red, orange, yellow, #7cdcf4, indigo, violet, red, orange, yellow, #7cdcf4, indigo, violet,red);
+  background-size: 200% 100%;
+  animation: infinite linear 4s rainbow-text-bg;
+  background-clip: text;
+  color: #00000000
+
+}
+@keyframes rainbow-text-bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

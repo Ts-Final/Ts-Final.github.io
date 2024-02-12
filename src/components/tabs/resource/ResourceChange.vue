@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import {ResourceTypes} from "../../../core/GameDataBase/types.ts";
+import {parseResourceName} from "../../../core/resource.ts";
 
+const {rc, produce} = defineProps<{rc:[ResourceTypes,number],produce:boolean}>()
+const name = parseResourceName(rc[0])
 </script>
 
 <template>
-  <div class="res" :class="{pro:rc?.produce, cost:!rc?.produce}">
-    <p>{{rc?.res.name}}</p>
-    <p>{{rc?.value}}/s</p>
+  <div class="res" :class="{pro:produce, cost:!produce}">
+    <p>{{name}}</p>
+    <p>{{rc[1]}}/s</p>
   </div>
 
 </template>
@@ -29,13 +33,3 @@ p {
   background-image: linear-gradient(to right, #ff191988 0%, #00000000 90%);
 }
 </style>
-
-<script lang="ts">
-import {ResourceChange} from "../../../core/resource/class/ResourceChange.ts";
-
-export default {
-  props: {
-    rc:ResourceChange
-  }
-}
-</script>

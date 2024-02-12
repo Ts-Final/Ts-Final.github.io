@@ -1,27 +1,24 @@
 <script setup lang="ts">
-
-import ResourceTop from "./resource/ResourceTop.vue";
 import TaskTop from "./task/TaskTop.vue";
-import {player} from "../../core/player.ts";
+import {displayRef} from "../../core/display.ts";
+import ResourceTop from "./resource/ResourceTop.vue";
 import ResearchTop from "./research/researchTop.vue";
+import H2PTab from "./H2PTab.vue";
+
 </script>
 
 <template>
-  <div class="full">
-    <div class="top114514"/>
-    <ResourceTop v-if="player.display.resource.value"/>
-    <TaskTop v-else-if="player.display.task.value"/>
-    <ResearchTop v-else-if="player.display.research.value"/>
-  </div>
+  <KeepAlive>
+    <div class="full">
+      <ResourceTop v-if="displayRef.resource.value"/>
+      <TaskTop v-else-if="displayRef.task.value"/>
+      <ResearchTop v-else-if="displayRef.research.value"/>
+      <H2PTab v-else-if="displayRef.h2p.value"/>
+    </div>
+  </KeepAlive>
 
 </template>
 
 <style scoped>
-.top114514 {
-  height: 2rem;
-  width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
-}
+
 </style>

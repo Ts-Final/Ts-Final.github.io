@@ -1,15 +1,30 @@
 <script setup lang="ts">
 import SeparateLine from "../../small/separateLine.vue";
 import ResourceChange from "../resource/ResourceChange.vue";
+import {Task} from "../../../core/GameDataBase/task.ts";
+import {player} from "../../../core/player.ts";
+import {ref} from "vue";
+import {gameUpdateDisplays} from "../../../core/gameUpdate.ts";
+
+const {task} = defineProps<{task: Task}>()
+const taskP = ref(player.task[task.id])
+function changeActivate() {
+  taskP.value[0] = !taskP.value[0]
+}
+function update() {
+  taskP.value = player.task[task.id]
+}
+gameUpdateDisplays.task.push(update)
+
 </script>
 
 <template>
-  <div class="res-line-top blue-border" v-if="task.unlocked.value">
+  <div class="res-line-top blue-border" v-if="taskP[1]">
     <div class="first-row">
       <span class="name">{{ task.name }}</span>
-      <button type="button" @click="task.changeActivate()" class="btn"
-              :class="{'btn-ON':task.activated.value, 'btn-OFF':!task.activated.value}">
-        <span v-if="task.activated.value">ON</span>
+      <button type="button" @click="changeActivate" class="btn"
+              :class="{'btn-ON':taskP[0], 'btn-OFF':!taskP[0]}">
+        <span v-if="taskP[0]">ON</span>
         <span v-else>OFF</span>
       </button>
     </div>
@@ -18,11 +33,11 @@ import ResourceChange from "../resource/ResourceChange.vue";
     </div>
     <div class="task-res-top blue-border">
       <div v-if="task.produce">
-        <ResourceChange :rc="rP" v-for="rP in task.produce" :key="rP.value"/>
+        <ResourceChange :produce="true" :rc="rP" v-for="rP in task.produce" :key="rP[1]"/>
       </div>
       <SeparateLine :width="1" v-if="task.produce && task.cost"/>
       <div v-if="task.cost">
-        <ResourceChange :rc="rP" v-for="rP in task.cost" :key="rP.value"/>
+        <ResourceChange :produce="false" :rc="rP" v-for="rP in task.cost" :key="rP[1]"/>
       </div>
       <p class="itl">{{ task.itl }}</p>
     </div>
@@ -100,15 +115,3 @@ p {
   border-top: 1px solid #7cdcf4;
 }
 </style>
-
-<script lang="ts">
-
-import {TaskClass} from "../../../core/task/class.ts";
-
-export default {
-  name: "TaskUnit",
-  props: {
-    task: {type: TaskClass, required: true}
-  }
-}
-</script>
