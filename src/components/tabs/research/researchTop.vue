@@ -2,20 +2,15 @@
 
 import ResearchUnit from "./researchUnit.vue";
 import {GameDataBase} from "../../../core/GameDataBase";
+import ResourceAmounts from "../../small/resourceAmounts.vue";
 </script>
 
 <template>
-  <div class="rch-wrapper">
+  <ResourceAmounts class="full-w"/>
+  <div class="full-w flex-wrap flex-row">
     <ResearchUnit v-for="rch in GameDataBase.Researches" :research="rch"/>
   </div>
 </template>
 
 <style scoped>
-.rch-wrapper {
-  width: 100%;
-  padding: 2px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 </style>

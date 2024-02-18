@@ -1,9 +1,9 @@
 <template>
-  <div class="line"></div>
+  <div class="bpt-line"></div>
 </template>
 
 <style scoped>
-.line {
+.bpt-line {
   width: 100%;
   min-width: 100%;
   max-height: v-bind(width)px;

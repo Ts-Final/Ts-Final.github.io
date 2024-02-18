@@ -1,38 +1,40 @@
 <script setup lang="ts">
-import ResourceChange from "../resource/ResourceChange.vue";
 import {Research} from "../../../core/GameDataBase/research.ts";
-import {player} from "../../../core/player.ts";
+import {player} from "../../../core/player";
 import {ref} from "vue";
-import {gameUpdateDisplays} from "../../../core/gameUpdate.ts";
-import {calcLevelTime} from "../../../core/research.ts";
+import {gameUpdateDisplays} from "../../../core/gameUpdate";
+import {calcLevelTime} from "../../../core/game-mechanics/research.ts";
+import {parseAffectType, parseAffectValue, parseResourceName} from "../../../core/game-mechanics/parse.ts";
 
 const {research} = defineProps<{research: Research}>()
-const researchP = ref(player.research[research.id])
+const researchP = ref(player.research[research.id-1])
 const finished = ref(false)
-let timeToUpg = 0
+let timeToUpg = ref(0)
 const percent = ref(0)
+const shown = ref(false)
 
 function changeActivate() {
   researchP.value[0] = !researchP.value[0]
 }
 
 function update() {
-  researchP.value = player.research[research.id]
-  finished.value = player.research[research.id][3] >= research.maxLevel
-  timeToUpg = calcLevelTime(research)
-  percent.value = 100*researchP.value[2] / timeToUpg
+  researchP.value = player.research[research.id-1]
+  finished.value = player.research[research.id-1][3] >= research.maxLevel
+  timeToUpg.value = calcLevelTime(research)
+  percent.value = 100*researchP.value[2] / timeToUpg.value
+  shown.value = researchP.value[1] && !finished.value
 }
 
-gameUpdateDisplays.research.push(update)
+gameUpdateDisplays.push(update)
 
 </script>
 
 <template>
-  <div class="rch-top blue-border" v-if="researchP[1] && !finished">
+  <div class="flex-col medium-size blue-border gameUnit" v-if="shown">
     <div class="show">
-      <div class="first-row">
-        <span class="name">{{research.name}} Lv.{{researchP[3]}}</span>
-        <button type="button" @click="changeActivate()" class="btn"
+      <div class="res-detail-first-row">
+        <span class="name">{{research.name}}</span>
+        <button type="button" @click="changeActivate" class="btn"
                 :class="{'btn-ON':researchP[0], 'btn-OFF':!researchP[0]}">
           <span v-if="researchP[0]">ON</span>
           <span v-else>OFF</span>
@@ -43,23 +45,33 @@ gameUpdateDisplays.research.push(update)
           <div class="progress" :style="{width: percent+'%'}"/>
         </div>
       </div>
+      <div class="third-row" style="display: flex;justify-content: space-around">
+        <div>Lv. {{ researchP[3] }}</div>
+        <div>本级用时：{{timeToUpg}}s</div>
+      </div>
       <div class="third-row">
         {{research.des}}
       </div>
     </div>
-    <div class="popout blue-border">
-      <ResourceChange :rc="rP" v-for="rP in research.cost" :key="rP[1]" :produce="false"/>
+    <div class="gameUnit-popout blue-border">
+      <div v-if="research.cost.length > 0" style="color: #7cdcf4">
+        <div>资源消耗：</div>
+        <div v-for="rP in research.cost">{{parseResourceName(rP[0])}}：{{rP[1]}}/s</div>
+      </div>
+      <br v-if="research.cost.length >0 && research.affect.length > 0">
+      <div v-if="research.affect.length >0" style="color: #7cdcf4">
+        <div>研究效果：</div>
+        <div v-for="aff in research.affect">
+          {{parseResourceName(aff[0])}} {{parseAffectType(aff[1])}}{{parseAffectValue(aff[2],aff[1])}}
+        </div>
+      </div>
+      <br>
       <p class="itl">{{ research.itl }}</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-.rch-top {
-  width: 15%;
-  display: flex;
-  position: relative;
-}
 .btn {
   transition: all 0.2s linear;
   width: 50px;
@@ -76,7 +88,7 @@ gameUpdateDisplays.research.push(update)
   border: #943430 1px solid;
 }
 
-.first-row {
+.res-detail-first-row {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -102,21 +114,6 @@ gameUpdateDisplays.research.push(update)
   height: 100%;
   background: #7cdcf4;
 }
-.popout {
-  flex-direction: column;
-  width: 75%;
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translate(-50%, 0);
-  z-index: 10;
-  transition: all 0.1s linear;
-  background-image: var(--bgi);
-  opacity: 0;
-}
-.rch-top:hover .popout {
-  opacity: 1;
-}
 .third-row {
   width: 100%;
   padding: 2px;
@@ -126,5 +123,7 @@ gameUpdateDisplays.research.push(update)
 .itl {
   font-style: italic;
   color: #b8dcee;
+  margin: 0;
 }
+
 </style>

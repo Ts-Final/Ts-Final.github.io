@@ -20,6 +20,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue","src/core/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue","src/core/**/*.ts","src/main.ts"],
+  "ts-node": {
+    "esm": true
+  },
   "references": [{ "path": "./tsconfig.node.json" }]
 }
