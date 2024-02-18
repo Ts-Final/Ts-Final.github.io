@@ -1,0 +1,45 @@
+.small-title {
+  text-align: center;
+  padding: 10px 0 10px 0;
+  margin: 0;
+
+}
+.credit-3col {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.credit-3col > p {
+  width: 33%;
+}
+.size-1\.5rem {
+  font-size: 1.5rem;
+}
+.size-1\.25rem {
+  font-size: 1.25rem;
+}
+.shadow {
+  color: #ffffff;
+  text-shadow: #7cdcf4 2px 2px 1px;
+  font-weight: bold;
+}
+
+.credit-2col {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.credit-2col > p {
+  width: 50%;
+}
+.credit-6col {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.credit-6col > p {
+  width: 16.67%;
+}

@@ -1,0 +1,32 @@
+.rainbow-text {
+  background-image: linear-gradient(to right, red, orange, yellow, #7cdcf4, indigo, violet, red, orange, yellow, #7cdcf4, indigo, violet,red);
+  background-size: 200% 100%;
+  animation: infinite linear 4s rainbow-text-bg;
+  background-clip: text;
+  color: #00000000
+
+}
+@keyframes rainbow-text-bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+.none-display {
+  display: none;
+}
+
+.op0\.5 {
+  opacity: 0.5;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.text-disabled {
+  text-decoration: line-through 2px;
+  font-style: italic;
+}

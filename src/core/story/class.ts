@@ -22,7 +22,7 @@ export class StoryClass {
    *  name: "序"
    *  des: "有人亲眼见证世界。有人却无望。"
    *  content: ...
-   *  unlock: () => player.resource.
+   *  unlock: () => index.resource.
    */
   constructor(id: string,
   name: string,

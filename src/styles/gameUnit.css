@@ -1,0 +1,42 @@
+.gameUnit {
+  position: relative;
+  margin: 0 5px 0 5px;
+  padding: 2px;
+  color: #b8dcee;
+  max-height: min-content;
+}
+
+.medium-size {
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.gameUnit-popout {
+  opacity: 0;
+  width: 75%;
+  position: absolute;
+  transform: translate(-50%, 4px);
+  transition: all 0.2s linear;
+  left: 50%;
+  top: 100%;
+  z-index: 10;
+  background-image: var(--bgi);
+  padding: 4px;
+}
+.gameUnit:hover > .gameUnit-popout {
+  opacity: 1;
+}
+
+.border1-top {
+  border-top: 1px solid #7cdcf4;
+}
+.border2-top {
+  border-top: 2px solid #7cdcf4;
+}
+
+.btn {
+  cursor: pointer;
+}
+.btn-disabled {
+  cursor: not-allowed;
+}

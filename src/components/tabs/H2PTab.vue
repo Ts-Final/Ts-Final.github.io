@@ -2,8 +2,8 @@
 
 import {GameDataBase} from "../../core/GameDataBase";
 import {ref} from "vue";
-import {player} from "../../core/player.ts";
-import {gameUpdateDisplays} from "../../core/gameUpdate.ts";
+import {player} from "../../core/player";
+import {gameUpdateDisplays} from "../../core/gameUpdate";
 
 const h2p = ref(1)
 const h2pInfo = ref("")
@@ -11,12 +11,13 @@ const h2pTitle = ref("")
 
 function update() {
   h2p.value = player.how2play
-  let h2pData = GameDataBase.How2Play.find(value => value.id == player.how2play)
+  let h2pData = GameDataBase.How2Play.find(value => value.id === player.how2play)
+  if (!h2pData) {return}
   h2pInfo.value = h2pData.info
   h2pTitle.value = h2pData.title
 }
 
-gameUpdateDisplays.h2p.push(update)
+gameUpdateDisplays.push(update)
 </script>
 
 <template>
@@ -28,7 +29,9 @@ gameUpdateDisplays.h2p.push(update)
         （比如部分教学内容，如果没有找到就是作者忘记写了（请务必通过各种渠道提醒作者）<br>
         左侧的文字可以按。
       </div>
-      <div class="h2p-button" v-for="h2p in GameDataBase.How2Play" @click="player.how2play = h2p.id">
+      <div class="h2p-button" :class="{'none-display':!h2p.unlocked}"
+           v-for="h2p in GameDataBase.How2Play.sort((v1,v2)=>v1.id-v2.id)"
+           @click="player.how2play = h2p.id" :key="h2p.id">
         {{ h2p.title }}
       </div>
     </div>

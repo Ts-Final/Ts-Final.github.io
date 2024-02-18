@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import SeparateLine from "../../small/separateLine.vue";
-import ResourceChange from "../resource/ResourceChange.vue";
 import {Task} from "../../../core/GameDataBase/task.ts";
-import {player} from "../../../core/player.ts";
+import {player} from "../../../core/player";
 import {ref} from "vue";
-import {gameUpdateDisplays} from "../../../core/gameUpdate.ts";
+import {gameUpdateDisplays} from "../../../core/gameUpdate";
+
+import {parseResourceName} from "../../../core/game-mechanics/parse.ts";
 
 const {task} = defineProps<{task: Task}>()
-const taskP = ref(player.task[task.id])
+const taskP = ref(player.task[task.id-1])
+const unlocked = ref(false)
 function changeActivate() {
   taskP.value[0] = !taskP.value[0]
 }
 function update() {
-  taskP.value = player.task[task.id]
+  taskP.value = player.task[task.id-1]
+  unlocked.value = player.task[task.id-1][1]
 }
-gameUpdateDisplays.task.push(update)
+gameUpdateDisplays.push(update)
 
 </script>
 
 <template>
-  <div class="res-line-top blue-border" v-if="taskP[1]">
-    <div class="first-row">
+  <div class="flex-col medium-size gameUnit blue-border" v-if="unlocked">
+    <div class="flex-row space-around">
       <span class="name">{{ task.name }}</span>
       <button type="button" @click="changeActivate" class="btn"
               :class="{'btn-ON':taskP[0], 'btn-OFF':!taskP[0]}">
@@ -28,16 +30,19 @@ gameUpdateDisplays.task.push(update)
         <span v-else>OFF</span>
       </button>
     </div>
-    <div class="des">
+    <div class="border1-top">
       {{task.des}}
     </div>
-    <div class="task-res-top blue-border">
-      <div v-if="task.produce">
-        <ResourceChange :produce="true" :rc="rP" v-for="rP in task.produce" :key="rP[1]"/>
-      </div>
-      <SeparateLine :width="1" v-if="task.produce && task.cost"/>
-      <div v-if="task.cost">
-        <ResourceChange :produce="false" :rc="rP" v-for="rP in task.cost" :key="rP[1]"/>
+    <div class="gameUnit-popout blue-border">
+      <div class="flex-row space-around">
+        <div v-if="task.produce.length>0" style="margin-left: 2px">
+          <div>资源生产：</div>
+          <div v-for="rP in task.produce">{{ parseResourceName(rP[0]) }}：+{{ rP[1] }}/s</div>
+        </div>
+        <div v-if="task.cost.length>0" style="margin-left: 2px">
+          <div>资源消耗：</div>
+          <div v-for="rP in task.cost">{{ parseResourceName(rP[0]) }}：-{{ rP[1] }}/s</div>
+        </div>
       </div>
       <p class="itl">{{ task.itl }}</p>
     </div>
@@ -46,33 +51,6 @@ gameUpdateDisplays.task.push(update)
 </template>
 
 <style scoped>
-.res-line-top {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  min-width: 200px;
-  max-width: 250px;
-  margin: 0 5px 0 5px;
-  padding: 2px;
-}
-
-.task-res-top {
-  flex-direction: column;
-  width: 75%;
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translate(-50%, 2px);
-  z-index: 10;
-  transition: all 0.1s linear;
-  background-image: var(--bgi);
-  opacity: 0;
-}
-
-.res-line-top:hover .task-res-top {
-  opacity: 1;
-}
-
 .itl {
   font-style: italic;
   color: #b8dcee;
@@ -100,18 +78,8 @@ p {
   border: #943430 1px solid;
 }
 
-.first-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
 .name {
   color: #b8dcee;
   font-size: 18px;
-}
-.des {
-  color: #b8dcee;
-  border-top: 1px solid #7cdcf4;
 }
 </style>

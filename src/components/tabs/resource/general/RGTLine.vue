@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {resource} from "../../../../core/player.ts";
 import {ref} from "vue";
-import {parseResourceName} from "../../../../core/resource.ts";
-import {gameUpdateDisplays} from "../../../../core/gameUpdate.ts";
+import {gameUpdateDisplays} from "../../../../core/gameUpdate";
+import {resource} from "../../../../core/player/resource.ts";
+import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
+import {parseResourceName} from "../../../../core/game-mechanics/parse.ts";
 
-const {ResKey} = defineProps<{ResKey:keyof typeof resource}>()
+const {ResKey} = defineProps<{ResKey:ResourceTypes}>()
 
 const displayName = parseResourceName(ResKey)
 
@@ -18,7 +19,7 @@ function update() {
   produce.value = resource[ResKey].produceChange.calcAllChange
   cost.value = resource[ResKey].costChange.calcAllChange
 }
-gameUpdateDisplays.resource.push(update)
+gameUpdateDisplays.push(update)
 
 </script>
 
