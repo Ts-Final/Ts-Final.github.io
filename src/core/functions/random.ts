@@ -1,16 +1,20 @@
 import {deepClone} from "./deepClone.ts";
 
-export function randomValueFromArray<T>(array:T[]): T{
+export function randomElement<T>(array:T[]): T{
   const random = Math.floor(Math.random() * array.length);
   return array[random];
 }
 
-export function randomValuesFromArray<T>(array1:T[]): T[] {
+/**
+ * 从arr随机多个元素
+ * @param array1
+ */
+export function randomElements<T>(array1:T[]): T[] {
   let array = deepClone(array1)
   const times = Math.floor(Math.random() * array.length)
   let value: T[] = []
   for (let i = 0; i < times; i++) {
-    let v = randomValueFromArray(array)
+    let v = randomElement(array)
     array.splice(array.indexOf(v))
     value.push(v)
   }

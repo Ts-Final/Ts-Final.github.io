@@ -2,9 +2,10 @@
 import {Research} from "../../../core/GameDataBase/research.ts";
 import {player} from "../../../core/player";
 import {ref} from "vue";
-import {gameUpdateDisplays} from "../../../core/gameUpdate";
 import {calcLevelTime} from "../../../core/game-mechanics/research.ts";
 import {parseAffectType, parseAffectValue, parseResourceName} from "../../../core/game-mechanics/parse.ts";
+import {gameUpdateDisplays} from "../../../core/gameUpdate/updateDisplay.ts";
+import {displayEnum} from "../../../core/GameDataBase/display.ts";
 
 const {research} = defineProps<{research: Research}>()
 const researchP = ref(player.research[research.id-1])
@@ -25,7 +26,7 @@ function update() {
   shown.value = researchP.value[1] && !finished.value
 }
 
-gameUpdateDisplays.push(update)
+gameUpdateDisplays[displayEnum.research].push(update)
 
 </script>
 

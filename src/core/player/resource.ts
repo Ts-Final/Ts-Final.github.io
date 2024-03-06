@@ -1,32 +1,39 @@
-import {ResourceChangeType, ResourceTypeEnum} from "../GameDataBase/resource.ts";
+import {ResourceTypeEnum} from "../GameDataBase/resource.ts";
 
 type resDict = {
   amount: number;
-  produceChange: {[key in ResourceChangeType|'calcAllChange']:number};
-  costChange: { task: number; calcAllChange: number; research: number };
+  max_record: number;
+
+  change: number;
   maximum: number;
   affects: {
     maxAdd: [string, number][];
     maxMult: [string, number][];
     consume: [string, number][];
     pro: [string, number][]
-  }
+  },
 }
 
-function getResourceDict(): resDict{
-  function resChangeDict() {
+function getResourceDict(): resDict {
+  /*function resChangeDict() {
     return {
       task: 0,
       research: 0,
       market: 0,
+      tense: 0,
 
       get calcAllChange() {
         return this.task + this.research
-      }, set calcAllChange(p) {
-        this.task = p
-      }
+      },
+      set calcAllChange(value: number) {
+        Object.assign(this, {
+          task: value,
+          research: 0,
+          market: 0,
+        })
+      },
     }
-  }
+  }*/
 
   function resAffectDict() {
     // Volar-Complainer here.
@@ -39,7 +46,8 @@ function getResourceDict(): resDict{
   }
 
   return {
-    amount: 0, maximum: 1e4, produceChange: resChangeDict(), costChange: resChangeDict(),
+    amount: 0, maximum: 1e4, change: 0,
+    max_record: 0,
     /**
      * name, value(pow or anything)
      */

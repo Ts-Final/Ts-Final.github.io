@@ -2,9 +2,10 @@
 import {Task} from "../../../core/GameDataBase/task.ts";
 import {player} from "../../../core/player";
 import {ref} from "vue";
-import {gameUpdateDisplays} from "../../../core/gameUpdate";
 
 import {parseResourceName} from "../../../core/game-mechanics/parse.ts";
+import {gameUpdateDisplays} from "../../../core/gameUpdate/updateDisplay.ts";
+import {displayEnum} from "../../../core/GameDataBase/display.ts";
 
 const {task} = defineProps<{task: Task}>()
 const taskP = ref(player.task[task.id-1])
@@ -16,7 +17,8 @@ function update() {
   taskP.value = player.task[task.id-1]
   unlocked.value = player.task[task.id-1][1]
 }
-gameUpdateDisplays.push(update)
+
+gameUpdateDisplays[displayEnum.task].push(update)
 
 </script>
 

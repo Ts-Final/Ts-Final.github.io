@@ -1,6 +1,7 @@
-import {GameDataBase} from "../GameDataBase";
-import {player} from "../player";
-import {canResourceChange, doResourceChange} from "../game-mechanics/resourceChange.ts";
+import {GameDataBase} from "../../GameDataBase";
+import {player} from "../../player";
+import {canResourceChange, doResourceChange} from "../../game-mechanics/resourceChange.ts";
+import {notify} from "../../functions/notify.ts";
 
 export function updateTasks() {
   for (let key = 0; key < GameDataBase.Tasks.length; key++) {
@@ -9,6 +10,9 @@ export function updateTasks() {
     // unlock check
     if (!player.task[key][1]) {
       player.task[key][1] = task.unlock
+      if (player.task[key][1]) {
+        notify.success(`解锁生产：${task.name}`, 1000)
+      }
     }
     // activate check
     if (!player.task[key][0]) {
@@ -39,11 +43,11 @@ export function updateTasks() {
 
     for (let i = 0; i < task.produce.length; i++) {
       let [resKey, value] = task.produce[i]
-      doResourceChange(resKey, value, true, 'task')
+      doResourceChange(resKey, value, true)
     }
     for (let i = 0; i < task.cost.length; i++) {
       let [resKey, value] = task.cost[i]
-      doResourceChange(resKey, value, false, 'task')
+      doResourceChange(resKey, value, false)
     }
 
   }

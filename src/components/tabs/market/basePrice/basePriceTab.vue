@@ -11,7 +11,7 @@ import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
         <p>资源类型</p>
         <p>基础价格/1</p>
       </div>
-      <BasePriceLine :resKey="resKey as ResourceTypes" v-for="resKey in Object.keys(player.resource)" />
+      <BasePriceLine :resKey="resKey as ResourceTypes" v-for="resKey in Object.keys(player.resource)"/>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
 
 .bpt-line {
   display: inline-grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-auto-flow: row;
   text-align: center;
   color: #b8dcee;

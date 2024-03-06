@@ -1,10 +1,10 @@
-import {GameDataBase} from "../GameDataBase";
-import {player} from "../player";
-import {canResourceChange, doResourceChange} from "../game-mechanics/resourceChange.ts";
-import {calcLevelTime} from "../game-mechanics/research.ts";
-import {clearAffectByName, registerAffect} from "../game-mechanics/resourceAffect.ts";
-import {parseAffectName} from "../game-mechanics/parse.ts";
-import {notify} from "../functions/notify.ts";
+import {GameDataBase} from "../../GameDataBase";
+import {player} from "../../player";
+import {canResourceChange, doResourceChange} from "../../game-mechanics/resourceChange.ts";
+import {calcLevelTime} from "../../game-mechanics/research.ts";
+import {clearAffectByName, registerAffect} from "../../game-mechanics/resourceAffect.ts";
+import {parseAffectName} from "../../game-mechanics/parse.ts";
+import {notify} from "../../functions/notify.ts";
 
 export function updateResearch() {
   for (let key = 0; key < GameDataBase.Researches.length; key++) {
@@ -13,6 +13,9 @@ export function updateResearch() {
     // unlock check
     if (!player.research[key][1]) {
       player.research[key][1] = research.unlock
+      if (player.research[key][1]) {
+        notify.success(`解锁研究：${research.name}`,1000)
+      }
     }
 
     // activate check
@@ -34,7 +37,7 @@ export function updateResearch() {
 
     for (let i = 0; i < research.cost.length; i++) {
       let cost = research.cost[i]
-      doResourceChange(cost[0], cost[1], false, 'research')
+      doResourceChange(cost[0], cost[1], false)
     }
 
     player.research[key][2] += 1 // time++

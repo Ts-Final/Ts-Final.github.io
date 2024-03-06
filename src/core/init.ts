@@ -1,22 +1,23 @@
-import {GameDataBase} from "./GameDataBase";
-// import {registerAffect} from "./resourceAffect.ts";
+import {load, save} from "./game-mechanics/save.ts";
+import {initListener} from "./functions/eventListener.ts";
+import {EventHub} from "./gameUpdate/eventHub.ts";
+import {GameEvent} from "./gameUpdate/gameEvent.ts";
 
-/**
- * TODO:Finish
- */
-function initResource() {
 
+function initIntervals() {
+  setInterval(() => EventHub.dispatch(GameEvent.UPDATE), 1000)
+  setInterval(() => EventHub.update(), 33)
+  setInterval(save, 10e3)
 }
-function initResearch() {
-  for (const research of Object.values(GameDataBase.Researches)) {
-    for (let i = 0; i < research.affect.length; i++) {
-      // let a = research.affect[i]
-      // registerAffect(a[0],a[1],a[2],`研究:${research.name}`)
-    }
-  }
-}
+
+// function isLocal() {
+//   const href = window.location.href
+//   return href.includes("127.0.0.1") || href.includes("localhost")
+// }
 
 export function init() {
-  initResearch()
-  initResource()
+  load(false)
+  initIntervals()
+  initListener()
+
 }

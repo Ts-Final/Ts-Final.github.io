@@ -1,7 +1,6 @@
 import {player} from "../player";
 import {calcResourceAffect as calc} from "./resourceAffect.ts";
-import {resource} from "../player/resource.ts";
-import {ResourceChangeType, ResourceTypes} from "../GameDataBase/resource.ts";
+import {ResourceTypes} from "../GameDataBase/resource.ts";
 
 
 /**
@@ -21,24 +20,20 @@ export function canResourceChange(res: ResourceTypes, value: number, produce: bo
 
 export function doResourceChange(res: ResourceTypes,
                                  value: number,
-                                 produce: boolean,
-                                 type: ResourceChangeType) {
+                                 produce: boolean,) {
   const Res = player.resource[res] // same pointer 同一个指针
   if (produce) {
     Res.amount += value * (1 + calc(res, 'pro').v)
-    Res.produceChange[type] += value * (1 + calc(res, 'pro').v)
+    Res.change += value * (1 + calc(res, 'pro').v)
   } else {
     Res.amount -= value * (1 - calc(res, 'consume').v)
-    Res.costChange[type as keyof typeof player.resource.energy.costChange] += value * (1 - calc(res, 'consume').v)
+    Res.change -= value * (1 - calc(res, 'consume').v)
   }
 }
 
 export function resetResourceChange() {
-  for (const key in resource) {
-    let v = resource[key as keyof typeof player.resource]
-    for (const key in v.produceChange) {
-      v.produceChange[key as keyof typeof v.produceChange] = 0
-      v.costChange[key as keyof typeof v.costChange] = 0
-    }
+  for (const key in player.resource) {
+    let v = player.resource[key as keyof typeof player.resource]
+    v.change = 0
   }
 }

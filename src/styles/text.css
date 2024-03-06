@@ -24,9 +24,14 @@
 
 .center-text {
   text-align: center;
+  align-self: center;
 }
 
 .text-disabled {
   text-decoration: line-through 2px;
   font-style: italic;
+}
+.text-bg-swap {
+  color: #7cdcf4;
+  background-image: var(--bgi);
 }

@@ -3,25 +3,36 @@
 import {GameDataBase} from "../../core/GameDataBase";
 import {ref} from "vue";
 import {player} from "../../core/player";
-import {gameUpdateDisplays} from "../../core/gameUpdate";
+
+import {gameUpdateDisplays} from "../../core/gameUpdate/updateDisplay.ts";
+import {displayEnum} from "../../core/GameDataBase/display.ts";
+import {EventHub, GameEvent} from "../../core/gameUpdate/eventHub.ts";
 
 const h2p = ref(1)
 const h2pInfo = ref("")
 const h2pTitle = ref("")
+const onUpdate = ref(true)
 
 function update() {
   h2p.value = player.how2play
   let h2pData = GameDataBase.How2Play.find(value => value.id === player.how2play)
-  if (!h2pData) {return}
+  if (!h2pData) {
+    return
+  }
   h2pInfo.value = h2pData.info
   h2pTitle.value = h2pData.title
 }
 
-gameUpdateDisplays.push(update)
+gameUpdateDisplays[displayEnum.h2p].push(update)
+
+EventHub.addHandler(GameEvent.UPDATE_H2P, function () {
+  onUpdate.value = false
+  onUpdate.value = true
+})
 </script>
 
 <template>
-  <div class="h2p-wrapper">
+  <div class="h2p-wrapper" v-if="onUpdate">
     <div id="h2p-list">
       <div style="width: 100%; padding: 5px; font-size: 0.9rem; text-align: left">
         欢迎使用指引模块。<br>
@@ -36,7 +47,7 @@ gameUpdateDisplays.push(update)
       </div>
     </div>
     <div id="h2pContent">
-      <div class="h2p-title">{{h2pTitle}}</div>
+      <div class="h2p-title">{{ h2pTitle }}</div>
       <div class="h2p-info" v-html="h2pInfo"></div>
     </div>
   </div>
@@ -51,13 +62,16 @@ gameUpdateDisplays.push(update)
   display: flex;
   flex-direction: row;
   color: #7cdcf4;
+  border-left: 1px solid #7cdcf4;
 }
+
 .h2p-button {
   text-align: center;
   cursor: pointer;
   height: 2rem;
-  border-bottom: 2px solid #7cdcf4;
+  border-bottom: 1px solid #7cdcf4;
 }
+
 #h2p-list {
   display: flex;
   width: 15%;
@@ -66,11 +80,13 @@ gameUpdateDisplays.push(update)
   word-break: normal;
 
 }
+
 #h2pContent {
   width: 85%;
   height: 100%;
   border-left: 2px #7cdcf4 solid;
 }
+
 .h2p-title {
   top: 0;
   left: 0;
@@ -80,6 +96,7 @@ gameUpdateDisplays.push(update)
   text-align: center;
   font-size: 1.25rem;
 }
+
 .h2p-info {
   word-break: normal;
   text-align: left;

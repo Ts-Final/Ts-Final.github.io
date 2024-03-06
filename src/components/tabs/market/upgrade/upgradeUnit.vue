@@ -3,8 +3,9 @@ import {upg} from "../../../../core/GameDataBase/market/upgrade.ts";
 import {player} from "../../../../core/player";
 import {ref} from "vue";
 import {parseCountryName, parseResourceName} from "../../../../core/game-mechanics/parse.ts";
-import {gameUpdateDisplays} from "../../../../core/gameUpdate";
 import {canPurchaseUpgrade, purchaseUpgrade} from "../../../../core/game-mechanics/marketUpgrade.ts";
+import {gameUpdateDisplays} from "../../../../core/gameUpdate/updateDisplay.ts";
+import {displayEnum} from "../../../../core/GameDataBase/display.ts";
 
 const {upgrade} = defineProps<{ upgrade: upg }>()
 const upgP = ref(player.market.upgrades[upgrade.id - 1])
@@ -19,7 +20,7 @@ function update() {
   title.value = canPurchase.value ? "" : "还买不起。"
 }
 
-gameUpdateDisplays.push(update)
+gameUpdateDisplays[displayEnum.marketUpgrade].push(update)
 </script>
 
 <template>

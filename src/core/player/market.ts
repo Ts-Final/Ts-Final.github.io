@@ -1,7 +1,7 @@
 import {getNumArray} from "./generator.ts";
 import {GameDataBase} from "../GameDataBase";
 import {ResourceTypes} from "../GameDataBase/resource.ts";
-import {randomNumber, randomValuesFromArray} from "../functions/random.ts";
+import {randomElements, randomNumber} from "../functions/random.ts";
 import {player} from "./index.ts";
 
 
@@ -14,8 +14,10 @@ import {player} from "./index.ts";
  */
 export function generateExchange() {
   let v: [string, ResourceTypes, number, number, number][] = []
+
+  v.push(["???", "energy", 1000, 0, 0.2])
   for (const company of GameDataBase.Market.Company) {
-    const sellResourceTypes = randomValuesFromArray(company.allResource)
+    const sellResourceTypes = randomElements(company.allResource)
 
     for (let i = 0; i < sellResourceTypes.length; i++) {
       const resKey = sellResourceTypes[i]
@@ -24,7 +26,15 @@ export function generateExchange() {
       amount *= company.baseAmount
       let price = player.market.basePrice[resKey as ResourceTypes]
       price *= randomNumber(0.9, 1.05)
-      v.push([company.name, resKey as ResourceTypes, amount, 0, price])
+
+      let arr = [company.name, resKey, amount, 0, price]
+      let fail = false
+      arr.forEach((v) => fail = fail || v == undefined)
+      if (fail) {
+        continue
+      }
+
+      v.push([company.name, resKey, amount, 0, price])
     }
   }
   return v

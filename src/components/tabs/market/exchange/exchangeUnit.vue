@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {player} from "../../../../core/player";
 import {ref} from "vue";
-import {gameUpdateDisplays} from "../../../../core/gameUpdate";
 import {parseResourceName} from "../../../../core/game-mechanics/parse.ts";
 import {
   canBuyExchange,
@@ -9,44 +8,67 @@ import {
   doBuyExchange,
   doSellExchange
 } from "../../../../core/game-mechanics/marketExchange.ts";
+import {gameUpdateDisplays} from "../../../../core/gameUpdate/updateDisplay.ts";
+import {displayEnum} from "../../../../core/GameDataBase/display.ts";
+import {status, statusToBoolean} from "../../../../core/functions/status.ts";
+import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
+import {EventHub, GameEvent} from "../../../../core/gameUpdate/eventHub.ts";
 
 const {index} = defineProps<{ index: number }>()
-/**
- * @borrows {player.market.exchange}
- */
-const exP = ref(player.market.exchange[index])
 
-const canBuy = ref(false)
-const canSell = ref(false)
+
+const ex = {
+  company: ref(""),
+  resName: ref("energy"),
+  bought:ref(0),
+  max: ref(0),
+  price: ref(0)
+}
+
+const canBuy = ref(0 as status)
+const canSell = ref(0 as status)
 
 const amount = ref(0)
 
 function update() {
-  exP.value = player.market.exchange[index]
-  canBuy.value = canBuyExchange(index,amount.value)
-  canSell.value = canSellExchange(index,amount.value)
+  const exValue = player.market.exchange[index]
+  // Max index: length - 1
+  // After refreshing exchange it may bugged up
+  if (index >= player.market.exchange.length) {
+    EventHub.dispatch(GameEvent.MARKET_EXCHANGE_UPDATE)
+    return
+  }
+  ex.company.value = exValue[0]
+  ex.resName.value = exValue[1]
+  ex.max.value = exValue[2]
+  ex.bought.value = exValue[3]
+  ex.price.value = exValue[4]
+  canBuy.value = canBuyExchange(index, amount.value)
+  canSell.value = canSellExchange(index, amount.value)
 }
 
-gameUpdateDisplays.push(update)
+gameUpdateDisplays[displayEnum.marketExchange].push(update)
+
 </script>
 
 <template>
   <div class="gameUnit medium-size flex-col blue-border">
     <div class="flex-row space-around">
-      <div>{{ exP[0] }}</div>
-      <div>{{ parseResourceName(exP[1]) }}</div>
+      <div>{{ ex.company.value }}</div>
+      <div>{{ parseResourceName(ex.resName.value as ResourceTypes) }}</div>
     </div>
-    <div class="flex-row border1-top">
-      <div class="center-text">剩余数量：{{ exP[2] - exP[3] }}</div>
+    <div class="flex-col border1-top">
+      <div class="center-text">剩余数量：{{ ex.max.value - ex.bought.value }}</div>
+      <div class="center-text">单价：{{ ex.price }}</div>
     </div>
     <div class="flex-row">
       <input class="blue-border center-text" v-model="amount" placeholder="数量">
       <div class="flex-col center-text" style="flex-grow: 1">
-        <div :class="{'btn-disabled':!canBuy,'btn':canBuy}"
-             @click="doBuyExchange(index,amount, canBuy)">购买
+        <div :class="{'btn-disabled':!statusToBoolean(canBuy),'btn':statusToBoolean(canBuy)}"
+             @click="doBuyExchange(index,amount, statusToBoolean(canBuy))">购买
         </div>
         <div :class="{'btn-disabled':!canSell,'btn':canSell}" class="border1-top"
-             @click="doSellExchange(index,amount, canSell)">卖出
+             @click="doSellExchange(index,amount, statusToBoolean(canSell))">卖出
         </div>
       </div>
     </div>

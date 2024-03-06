@@ -1,6 +1,5 @@
-import {ValueNotFoundError} from "../functions/Arrays.ts";
 import {ResAffectTypes, ResourceTypes} from "../GameDataBase/resource.ts";
-import {NotImplementedError} from "../functions/errors.ts";
+import {NotImplementedError, ValueNotFoundError} from "../functions/errors.ts";
 import {affectSource} from "./resourceAffect.ts";
 import {countryEnum} from "../GameDataBase/situation/country.ts";
 

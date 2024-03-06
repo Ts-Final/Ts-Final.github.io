@@ -1,4 +1,5 @@
 import {ResAffectTypes, ResourceTypes} from "./resource.ts";
+import {player} from "../player";
 
 export interface Research {
   id: number
@@ -36,7 +37,9 @@ export const Researches: Research[] = [
     cost: [],
     time: 15,
     maxLevel: 1,
-    unlock: true,
+    get unlock() {
+      return player.resource.air.max_record >= 10
+    },
     timePow: 1,
   }
 ]

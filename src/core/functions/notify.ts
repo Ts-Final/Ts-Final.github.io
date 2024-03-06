@@ -1,4 +1,4 @@
-import {ValueNotFoundError} from "./Arrays.ts";
+import {ValueNotFoundError} from "./errors.ts";
 
 export const notify = (function (){
   const notifyElement = document.createElement('div')

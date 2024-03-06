@@ -10,9 +10,9 @@ import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
       <div class="RGT-line blue-border">
         <p>资源类型</p>
         <p>当前数量</p>
+        <p>上限</p>
+        <p>变化/s</p>
         <p>最大</p>
-        <p>生产/s</p>
-        <p>消耗/s</p>
       </div>
       <RGTLine class="RGT-line blue-border no-top-border"
                v-for="res in Object.keys(player.resource)"
@@ -30,14 +30,16 @@ import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
   width: 75%;
   margin: auto;
   color: #7cdcf4;
-  top:-15%;
+  top: -15%;
 }
+
 .RGT-line {
   display: inline-grid;
-  grid-template-columns: repeat(5,1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-auto-flow: row;
   text-align: center;
 }
+
 .res-general-wrapper {
   display: flex;
   width: 100%;
@@ -48,6 +50,6 @@ import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
 <script lang="ts">
 
 export default {
-  name:"ResourceGeneralTop",
+  name: "ResourceGeneralTop",
 }
 </script>

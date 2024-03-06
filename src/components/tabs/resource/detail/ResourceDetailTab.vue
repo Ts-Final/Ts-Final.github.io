@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import {Ref, ref} from "vue";
 import {player} from "../../../../core/player";
-import {gameUpdateDisplays} from "../../../../core/gameUpdate";
 import {ResourceTypes} from "../../../../core/GameDataBase/resource.ts";
 import {parseAffectValue, parseResourceName} from "../../../../core/game-mechanics/parse.ts";
+import {gameUpdateDisplays} from "../../../../core/gameUpdate/updateDisplay.ts";
+import {displayEnum} from "../../../../core/GameDataBase/display.ts";
 
 /**
  * volar-complainer
- * @type Ref<ResourceTypes>
  */
-const chosenResource = ref("energy")
+const chosenResource: Ref<ResourceTypes> = ref("energy")
 
 type affect = [string, number][]
-type chosenAffectType = {pro:affect, consume: affect, maxAdd: affect, maxMult:affect}
-const chosenAffect: Ref<chosenAffectType> = ref({pro:[], consume:[], maxAdd:[], maxMult:[],})
+type chosenAffectType = {
+  pro: affect,
+  consume: affect,
+  maxAdd: affect,
+  maxMult: affect
+}
+const chosenAffect: Ref<chosenAffectType> = ref({pro: [], consume: [], maxAdd: [], maxMult: [],})
 
 function changeChosen(key: string) {
-  chosenResource.value = key
+  chosenResource.value = key as ResourceTypes
 }
+
 function update() {
   const affects = player.resource[chosenResource.value as keyof typeof player.resource].affects
   chosenAffect.value.pro = affects.pro
@@ -25,7 +31,8 @@ function update() {
   chosenAffect.value.maxMult = affects.maxMult
   chosenAffect.value.maxAdd = affects.maxAdd
 }
-gameUpdateDisplays.push(update)
+
+gameUpdateDisplays[displayEnum.resourceDetail].push(update)
 
 
 </script>
@@ -40,32 +47,32 @@ gameUpdateDisplays.push(update)
       </div>
     </div>
     <div class="res-detail">
-      <div class="res-detail-list right-border">
+      <div class="res-detail-list  left-border right-border">
         <div class="res-detail-first-row">生产加成</div>
         <div v-for="aff in chosenAffect.pro" class="res-detail-row">
-          <div>{{aff[0]}}</div>
-          <div>+{{parseAffectValue(aff[1],'pro')}}</div>
+          <div>{{ aff[0] }}</div>
+          <div>+{{ parseAffectValue(aff[1], 'pro') }}</div>
         </div>
       </div>
       <div class="res-detail-list right-border">
         <div class="res-detail-first-row">消耗减少</div>
         <div v-for="aff in chosenAffect.consume" class="res-detail-row">
-          <div>{{aff[0]}}</div>
-          <div>-{{parseAffectValue(aff[1],'consume')}}</div>
+          <div>{{ aff[0] }}</div>
+          <div>-{{ parseAffectValue(aff[1], 'consume') }}</div>
         </div>
       </div>
       <div class="res-detail-list right-border">
         <div class="res-detail-first-row">最大（加算）</div>
         <div v-for="aff in chosenAffect.maxAdd" class="res-detail-row">
-          <div>{{aff[0]}}</div>
-          <div>+{{parseAffectValue(aff[1],'maxAdd')}}</div>
+          <div>{{ aff[0] }}</div>
+          <div>+{{ parseAffectValue(aff[1], 'maxAdd') }}</div>
         </div>
       </div>
-      <div class="res-detail-list">
+      <div class="res-detail-list right-border">
         <div class="res-detail-first-row">最大（乘算）</div>
         <div v-for="aff in chosenAffect.maxMult" class="res-detail-row">
-          <div>{{aff[0]}}</div>
-          <div>+{{parseAffectValue(aff[1],'maxMult')}}</div>
+          <div>{{ aff[0] }}</div>
+          <div>+{{ parseAffectValue(aff[1], 'maxMult') }}</div>
         </div>
       </div>
     </div>
@@ -83,6 +90,7 @@ gameUpdateDisplays.push(update)
   display: flex;
   flex-direction: column;
 }
+
 .res-detail-top {
   top: 0;
   width: 90%;
@@ -90,15 +98,18 @@ gameUpdateDisplays.push(update)
   display: flex;
   margin: 5%;
 }
+
 .res-detail-btn {
   border: 2px #7cdcf4 solid;
   text-align: center;
   color: #7cdcf4;
   flex-grow: 1;
 }
+
 .chosen {
   border-color: #c35ee7;
 }
+
 .res-detail {
   display: flex;
   flex-direction: row;
@@ -107,30 +118,41 @@ gameUpdateDisplays.push(update)
   height: 90%;
 
 }
+
+.left-border {
+  border-left: 1px solid #7cdcf4;
+}
+
 .right-border {
   border-right: 1px solid #7cdcf4;
 }
+
 .res-detail-first-row {
   border: #7cdcf4 2px solid;
   text-align: center;
   width: 100%;
 }
+
 .res-detail-list {
   flex-direction: column;
   flex-grow: 1;
 }
+
 .res-detail-row {
   display: flex;
   flex-direction: row;
 }
-.res-detail-row>div{
+
+.res-detail-row > div {
   width: 50%;
   padding: 2px;
 }
-.res-detail-row>div:first-child {
+
+.res-detail-row > div:first-child {
   text-align: left;
 }
-.res-detail-row>div:not(:first-child){
+
+.res-detail-row > div:not(:first-child) {
   text-align: right;
 }
 </style>

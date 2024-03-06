@@ -1,4 +1,5 @@
 import "./h2p.css"
+import {player} from "../../player";
 
 export interface how2play {
   id: number
@@ -7,6 +8,7 @@ export interface how2play {
   unlocked: boolean
 }
 export const version = "Test-06"
+export const versionCount = 21 // Test-06
 
 let setUpDate = new Date(2022, 5, 28)
 let passedDays = Math.floor((Date.now() - setUpDate.getTime()) / (1000 * 60 * 60 * 24))
@@ -26,7 +28,7 @@ export const How2Play: how2play[] = [
     以上是设定。本游戏是从Space Travel Idle
     <a style="color:#d7ec31" href="https://store.steampowered.com/app/1407860/">(steam)</a>
     改变而来，加入了作者设定的一些世界观使本游戏稍微丰富一点（作者发疯确认）。<br>
-    本游戏于2022/5/28立项。（现在已经过去了${passedDays}天）
+    本游戏于2022/5/28立项。前后一共有${versionCount}个版本（现在已经过去了${passedDays}天）
     `,
     unlocked: true,
   },
@@ -60,7 +62,7 @@ export const How2Play: how2play[] = [
     </div>
     <p class="small-title size-1.5rem rainbow-text">Thank for your playing!</p>
     `,
-    unlocked: false
+    unlocked: false,
   },
   {
     id: 1,
@@ -90,7 +92,9 @@ export const How2Play: how2play[] = [
     按下 Alt+M 可以刷新当前交易、价格（正常是每天刷新，但是由于是用的随机所以有概率导致运气差到没有，提供补偿措施吧。<br>
     这个也没想好怎么写。 
     `,
-    unlocked: true,
+    get unlocked() {
+      return player.resource.air.max_record >= 20
+    }
   },
   {
     id:4,

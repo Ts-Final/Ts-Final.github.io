@@ -9,3 +9,10 @@ export class NotImplementedError extends Error {
   }
 
 }
+
+export class ValueNotFoundError extends Error {
+  constructor(msg: string, ...data: any[]) {
+    super(msg)
+    console.log(data)
+  }
+}

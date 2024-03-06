@@ -33,7 +33,7 @@
 :root {
   --left-bar-width: 8rem;
   --z-topbar: 10;
-  --z-popout: 20;
+  --z-modal: 20;
   --bgi:linear-gradient(60deg, #0d1418 0%, #11161b 100%);
   --border: #7cdcf4;
 

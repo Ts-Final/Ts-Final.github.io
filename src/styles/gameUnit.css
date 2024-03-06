@@ -1,6 +1,6 @@
 .gameUnit {
   position: relative;
-  margin: 0 5px 0 5px;
+  margin: 5px 5px 0 5px;
   padding: 2px;
   color: #b8dcee;
   max-height: min-content;
@@ -22,9 +22,17 @@
   z-index: 10;
   background-image: var(--bgi);
   padding: 4px;
+  pointer-events: none;
 }
 .gameUnit:hover > .gameUnit-popout {
   opacity: 1;
+  pointer-events: all;
+}
+.gameUnit-contain {
+  display: flex;
+  width: 90%;
+  left: 5%;
+  border:none;
 }
 
 .border1-top {

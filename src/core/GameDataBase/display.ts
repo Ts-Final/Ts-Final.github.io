@@ -1,0 +1,15 @@
+export enum displayEnum {
+  baseLayouts ,
+  resourceGeneral,
+  resourceDetail,
+  task,
+  research,
+  storyMain,
+  storySide,
+  storyExtra,
+  h2p,
+  marketUpgrade,
+  marketPrice,
+  marketExchange,
+  marketCompany,
+}

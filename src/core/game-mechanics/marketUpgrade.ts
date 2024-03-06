@@ -1,7 +1,7 @@
 import {player} from "../player";
 import {GameDataBase} from "../GameDataBase";
-import {ValueNotFoundError} from "../functions/Arrays.ts";
 import {doResourceChange} from "./resourceChange.ts";
+import {ValueNotFoundError} from "../functions/errors.ts";
 
 export function canPurchaseUpgrade(id:number) {
   const upgrade = GameDataBase.Market.Upgrade.find((v)=>v.id == id)
@@ -26,7 +26,7 @@ export function purchaseUpgrade(id:number,canPurchase:boolean) {
   player.market.upgrades[id-1][1] = true
   for (let i = 0; i < upgrade.costResource.length; i++) {
     let [resType, value] = upgrade.costResource[i]
-    doResourceChange(resType, value, false, 'market')
+    doResourceChange(resType, value, false)
   }
   player.money -= upgrade.costMoney
 }
